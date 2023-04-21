@@ -1,0 +1,165 @@
+<div><h1>{{titulo}}</h1></div>
+
+<form (submit)="procesar()" method="post">
+  <fieldset>
+      <legend>Seleccion multiple de PROVINCIAS</legend>
+
+     
+      <table class="table table-hover" border="1">
+        <!-- Encabezados de la tabla -->
+        <thead>
+          <tr class="bg-info">
+            <th scope="col">ID</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Capital</th>
+            <th scope="col">Imagen de la Provincia</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Región</th>
+            <th scope="col">Acción </th>
+      
+          </tr>
+        </thead>
+        <tbody *ngIf="usuarios.length > 0; else fila">
+          <!-- Datos de la tabla usando *ngFor -->
+          <tr *ngFor="let provincia of usuarios; let i = index">
+            <td class="table-info">{{provincia.id}}</td>
+            <td class="table-info">{{provincia.nombre}}</td>
+            <td class="table-info">{{provincia.capital}}</td>
+            <td class="table-info"> <img [src]="provincia.rutaImagen" alt="Imagen de {{usuarios[0].nombre}}" align="center" width="275" height="183"> </td> 
+            <td class="table-info">{{provincia.descripcion}}</td>
+            <td class="table-info">{{provincia.region}}</td>
+          
+
+            <td class="table-info"> <input type="checkbox" 
+           value="{{provincia.id}},{{provincia.nombre}},{{provincia.video}}" 
+           (click)="addRemoveItem($event)"></td> 
+          
+          </tr>
+        
+        </tbody>
+      
+        <ng-template #fila>
+          <tbody>
+              <tr>
+                  <td colspan="4">NO EXISTEN PROVINCIAS CREADAS</td>
+              </tr>
+          </tbody>
+      </ng-template>
+      </table>
+
+      <hr>
+
+      <H2> VIDEOS DE LAS PROVINCIAS </H2>
+
+      <div class="form-check-inline">
+        <ng-container *ngFor="let region of ['Centro', 'Cuyo', 'NOA']; let i = index;">
+          <input class="form-check-input" type="radio" name="region" [id]="'regionRadio'+i" [(ngModel)]="seleccionradio" [value]="region"> 
+          <label class="form-check-label" [for]="'regionRadio'+i"><span class="form-check-label">{{region}}</span></label>
+        </ng-container>
+      </div>
+
+
+      <div class="form-check" [ngSwitch]="seleccionradio">
+        <div *ngSwitchCase="'Centro'" class="alert alert-primary">
+          <h3>ZONA CENTRO SELECCIONADA</h3>
+
+          <div *ngFor="let provincia of usuarios; let i = index">
+            <div *ngIf="provincia.region === 'Centro'">
+              <h3>{{provincia.nombre}}  </h3> <br>
+          
+              <iframe width="560" height="315" src="https://www.youtube.com/embed/kz_OU17Os3U" title="YouTube video player"
+               frameborder="0" 
+               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+                *ngIf="provincia.nombre === 'Buenos Aires'"
+                ></iframe>
+           
+              <iframe width="560" height="315" src="https://www.youtube.com/embed/FtD7hBacnTo" title="YouTube video player" 
+              frameborder="0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+               allowfullscreen
+               *ngIf="provincia.nombre === 'Córdoba'"></iframe>
+
+               <iframe width="560" height="315" src="https://www.youtube.com/embed/w7fK5SFN2Yw" title="YouTube video player" 
+               frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+                *ngIf="provincia.nombre === 'Santa Fé'"></iframe>
+            </div>
+
+
+            
+          </div>
+
+
+        </div>
+
+
+        <div *ngSwitchCase="'Cuyo'" class="alert alert-warning">
+
+          <h3>ZONA CUYO SELECCIONADA</h3>
+
+         <div *ngFor="let provincia of usuarios; let i = index">
+
+          
+          <div *ngIf="provincia.region === 'Cuyo'">
+            <h3 >{{provincia.nombre}}  </h3> <br>
+        
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/tzlErkXhXh8" title="YouTube video player" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+             allowfullscreen
+             *ngIf="provincia.nombre === 'Mendoza'"
+             ></iframe>
+
+             <iframe width="560" height="315" src="https://www.youtube.com/embed/UhXwtmuuiQs" title="YouTube video player"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+              allowfullscreen
+              *ngIf="provincia.nombre === 'San Juan'"
+              ></iframe>
+
+              <iframe width="560" height="315" src="https://www.youtube.com/embed/KYXsr3ADhoA" title="YouTube video player" 
+              frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+              allowfullscreen
+              
+              *ngIf="provincia.nombre === 'San Luis '"></iframe>
+          </div>
+
+          
+
+         </div>
+        
+       
+
+        </div>
+
+        <div *ngSwitchCase="'NOA'" class="alert alert-success">
+          <h3 >ZONA NOA SELECCIONADA</h3>
+
+          <div *ngFor="let provincia of usuarios; let i = index">
+            <div *ngIf="provincia.region === 'NOA'">
+              <!--
+
+                 <iframe width="560" height="315" src="provincia.video" frameborder="0" allowfullscreen></iframe>
+                Quise hacer esto pero me tira error
+                -->
+                <h3 >{{provincia.nombre}}  </h3> <br>
+        
+                  <iframe width="560" height="315" src="https://www.youtube.com/embed/3dzO0avyDhI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                  allowfullscreen
+                  *ngIf="provincia.nombre === 'Túcuman'"></iframe>
+
+                  <iframe width="560" height="315" src="https://www.youtube.com/embed/h5Ay5v1uxMY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                  allowfullscreen
+                  *ngIf="provincia.nombre === 'Salta'"></iframe>
+            </div>
+          </div>
+          
+         </div> 
+
+
+        </div>
+      
+      
+  </fieldset>
+</form>
